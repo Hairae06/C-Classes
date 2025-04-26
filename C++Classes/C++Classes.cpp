@@ -1,20 +1,56 @@
-// C++Classes.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
+#include <string>
+#include <vector>
 
-#include <iostream>
-
-int main()
+class BaseClassName
 {
-    std::cout << "Hello World!\n";
+public:
+	~Database(); // Destructor
+	void Create(BaseClassName::eType type);
+	void DisplayAll();
+	void Display(const std::string& name);
+	void Display(BaseClassName::eType type);
+
+
+	std::string name;
+	std::int16_t lifespan;
+
+	virtual void Read(std::ostream& ostream, std::istream& istream);
+	virtual void Write(std::ostream& ostream);
+
+	std::string GetName();
+
+	eType GetType();
+
+	std::vector<BaseClassName*> objects;
+
+};
+
+enum class eType
+{
+	CAT,
+	DOG,
+	BIRD
+}; // example animal based classes
+
+void BaseClassName::Read(std::ostream& ostream, std::istream& istream)
+{
+	BaseClassName::Read(ostream, istream); // Call base class Read 
+	ostream << "Enter speed: ";
+	istream >> speed;
 }
 
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
+void BaseClassName::Write(std::ostream& ostream)
+{
+	BaseClassName::Write(ostream); // Call base class Write 
+	ostream << "Speed: " << speed << std::endl;
+}
 
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
+std::string BaseClassName::GetName()
+{
+	return std::string(name);
+}
+
+eType BaseClassName::GetType() 
+{
+	return eType::CAT; 
+} // or DOG
